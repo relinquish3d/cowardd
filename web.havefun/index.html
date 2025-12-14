@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> COWARD - T-Shirts for the Fearless Coward</title>
+    <style>
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Light gray */
+            color: #666666; /* Dark gray */
+            line-height: 1.6;
+        }
+        header {
+            background-color: #ffffff; /* White */
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #cccccc; /* Medium gray */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            color: #666666; /* Dark gray */
+            transform-style: preserve-3d;
+            animation: rotate3D 6s infinite linear;
+            margin-bottom: 10px;
+        }
+        @keyframes rotate3D {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            25% { transform: rotateX(90deg) rotateY(0deg); }
+            50% { transform: rotateX(90deg) rotateY(90deg); }
+            75% { transform: rotateX(0deg) rotateY(90deg); }
+            100% { transform: rotateX(0deg) rotateY(0deg); }
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #666666; /* Dark gray */
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #cccccc; /* Medium gray */
+        }
+        .cart-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .cart-counter {
+            background-color: #cccccc; /* Medium gray */
+            color: #ffffff; /* White */
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.8em;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+        }
+        .hero {
+            background-color: #ffffff; /* White */
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            background-color: #666666; /* Dark gray */
+            color: #ffffff; /* White */
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .cta-button:hover {
+            background-color: #cccccc; /* Medium gray */
+        }
+        #threejs-container {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+        .products {
+            padding: 40px 20px;
+            background-color: #f5f5f5; /* Light gray */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product {
+            background-color: #ffffff; /* White */
+            border: 1px solid #cccccc; /* Medium gray */
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .product h3 {
+            margin: 10px 0;
+            color: #666666; /* Dark gray */
+        }
+        .product p {
+            margin: 5px 0;
+        }
+        .add-to-cart {
+            background-color: #666666; /* Dark gray */
+            color: #ffffff; /* White */
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .add-to-cart:hover {
+            background-color: #cccccc; /* Medium gray */
+        }
+        .newsletter {
+            background-color: #ffffff; /* White */
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .newsletter input {
+            padding: 10px;
+            width: 70%;
+            margin-right: 10px;
+            border: 1px solid #cccccc; /* Medium gray */
+        }
+        .newsletter button {
+            padding: 10px 20px;
+            background-color: #666666; /* Dark gray */
+            color: #ffffff; /* White */
+            border: none;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #666666; /* Dark gray */
+            color: #ffffff; /* White */
+            text-align: center;
+            padding: 20px;
+        }
+        footer a {
+            color: #cccccc; /* Medium gray */
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .logo { font-size: 2em; }
+            .hero h1 { font-size: 2em; }
+            nav a { margin: 0 10px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">COWARD</div>
+        <p>T-Shirts for the Fearless Coward</p>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#cart">Cart</a>
+        </nav>
+        <div class="cart-icon" onclick="alert('Cart: ' + cartCount + ' items')">🛒<span class="cart-counter" id="cart-counter">0</span></div>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Browse Our Coward Collection</h1>
+        <p>Embrace irony with our edgy, streetwear-inspired tees.</p>
+        <button class="cta-button" onclick="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})">Shop Now</button>
+        <div id="threejs-container"></div>
+    </section>
+
+    <section id="shop" class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Coward+Crest+Tee" alt="no image">
+            <h3>Coward x Skariga </h3>
+            <p>Iconic crest design for the bold coward.</p>
+            <p>Rp.500.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Irony+Tee" alt="no image">
+            <h3>Original Coward </h3>
+            <p>Design original form Coward.</p>
+            <p>Rp.1.000.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Boldly+Cowardly+Tee" alt="no image">
+            <h3>Coward x Bape</h3>
+            <p>Collaboration between Coward and Bape.</p>
+            <p>Rp.2.500.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Fearless+Flee+Tee" alt="no image">
+            <h3>Coward x Adidas </h3>
+            <p>Collaboration between Coward and Adidas.</p>
+            <p>Rp.1.500.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Coward+Code+Tee" alt="no image">
+            <h3>Coward x Nike </h3>
+            <p>Collaboration between Coward and Nike.</p>
+            <p>Rp.1.500.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/250x200?text=Edgy+Escape+Tee" alt="no image">
+            <h3>Coward x Lacoste </h3>
+            <p>Collaboration between Coward and Lacoste.</p>
+            <p>Rp.1.500.000</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Stay Coward</h2>
+        <p>Sign up for updates on new drops.</p>
+        <input type="email" placeholder="Enter your email" id="email">
+        <button onclick="signup()">Subscribe</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 COWARD. All rights reserved.</p>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <p>Contact: cowardinfo@gmail.com</p>
+    </footer>
+
+    <script>
+        let cartCount = 0;
+        const cartCounter = document.getElementById('cart-counter');
+
+        function addToCart() {
+            cartCount++;
+            cartCounter.textContent = cartCount;
+            alert('Added to cart! Total items: ' + cartCount);
+        }
+
+        function signup() {
+            const email = document.getElementById('email').value;
+            if (email) {
+                alert('Subscribed with: ' + email);
+            } else {
+                alert('Please enter a valid email.');
+            }
+        }
+
+        // Three.js 3D Animation: Simple floating cube as a logo/t-shirt representation
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 300, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, 300);
+        document.getElementById('threejs-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0xcccccc, wireframe: true }); // Gray wireframe
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Smooth scrolling for nav
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
